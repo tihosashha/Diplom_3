@@ -20,7 +20,7 @@ public class OpenPersonalAccountTest {
     @Before
     public void setUp() {
         new DriverInitialization().startBrowser();
-        generalPage = open(Url.urlBase, GeneralPage.class);
+        generalPage = open(Url.URL_BASE, GeneralPage.class);
     }
 
     @Test

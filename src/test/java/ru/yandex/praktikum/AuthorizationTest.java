@@ -29,7 +29,7 @@ public class AuthorizationTest {
         UserApiClient userApiClient = new UserApiClient();
         userReqJson = GenerateData.generateUserAccount();
         userApiClient.createUser(userReqJson);
-        generalPage = open(Url.urlBase, GeneralPage.class);
+        generalPage = open(Url.URL_BASE, GeneralPage.class);
         email = userReqJson.getEmail();
         password = userReqJson.getPassword();
     }
@@ -75,6 +75,6 @@ public class AuthorizationTest {
     @After
     public void tearDown() {
         closeWebDriver();
-        GenerateData.deleteUserAccount(userReqJson);
+        UserApiClient.deleteUserAccount(userReqJson);
     }
 }

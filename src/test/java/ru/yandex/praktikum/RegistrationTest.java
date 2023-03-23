@@ -8,6 +8,7 @@ import org.junit.Test;
 import ru.yandex.praktikum.driver.DriverInitialization;
 import ru.yandex.praktikum.helper.GenerateData;
 import ru.yandex.praktikum.helper.Url;
+import ru.yandex.praktikum.helper.api.UserApiClient;
 import ru.yandex.praktikum.helper.api.UserReqJson;
 import ru.yandex.praktikum.page.RegistrationPage;
 
@@ -28,7 +29,7 @@ public class RegistrationTest {
     public void setUp() {
         new DriverInitialization().startBrowser();
         userReqJson = GenerateData.generateUserAccount();
-        registrationPage = open(Url.urlRegistration, RegistrationPage.class);
+        registrationPage = open(Url.URL_REGISTRATION, RegistrationPage.class);
         name = userReqJson.getName();
         email = userReqJson.getEmail();
         password = userReqJson.getPassword();
@@ -51,12 +52,11 @@ public class RegistrationTest {
                 .inputNameEmailPasswordAndRegister(name, email, "12345");
 
         assertTrue(registrationPage.returnTrueIfShowShortPasswordError());
-
     }
 
     @After
     public void tearDown() {
         closeWebDriver();
-        GenerateData.deleteUserAccount(userReqJson);
+        UserApiClient.deleteUserAccount(userReqJson);
     }
 }

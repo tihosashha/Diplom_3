@@ -20,7 +20,7 @@ public class OpenConstructorFromLogInPageTest {
     @Before
     public void setUp() {
         new DriverInitialization().startBrowser();
-        loginPage = open(Url.urlLogin, LoginPage.class);
+        loginPage = open(Url.URL_LOGIN, LoginPage.class);
     }
 
     @Test

@@ -35,15 +35,4 @@ public class GenerateData {
     public static void generateName() {
         name = faker.name().username();
     }
-
-    @Step("Удаление пользователя с почтой {userReqJson.email} и паролем {userReqJson.password}")
-    public static void deleteUserAccount(UserReqJson userReqJson) {
-        UserApiClient userApiClient = new UserApiClient();
-        Response responseAuth = userApiClient.authorization(userReqJson);
-        if (responseAuth.statusCode() == 200) {
-            userApiClient.deleteUser();
-        } else {
-            System.out.println("Пользователь создан не был");
-        }
-    }
 }

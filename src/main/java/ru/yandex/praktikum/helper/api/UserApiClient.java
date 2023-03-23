@@ -6,14 +6,17 @@ import io.restassured.response.Response;
 
 public class UserApiClient extends RestAssuredClient {
 
+    public static final String ENDPOINT_LOGIN = "/auth/login";
+    public static final String ENDPOINT_REGISTER = "/auth/register";
+    public static final String ENDPOINT_USER = "/auth/user";
+
     private String bearerToken = "";
 
     @Step("АПИ Авторизация")
     public Response authorization(UserReqJson body) {
         Response response = reqSpec
-                .contentType(ContentType.JSON)
                 .body(body)
-                .post("/auth/login");
+                .post(ENDPOINT_LOGIN);
         extractToken(response);
         return response;
     }
@@ -21,9 +24,8 @@ public class UserApiClient extends RestAssuredClient {
     @Step("АПИ Создание пользователя")
     public Response createUser(UserReqJson json) {
         Response response = reqSpec
-                .contentType(ContentType.JSON)
                 .body(json)
-                .post("/auth/register");
+                .post(ENDPOINT_REGISTER);
         extractToken(response);
         return response;
     }
@@ -45,6 +47,17 @@ public class UserApiClient extends RestAssuredClient {
     @Step("АПИ Пользователь удалён")
     public void deleteUser() {
         reqSpec.header("Authorization", bearerToken)
-                .delete("/auth/user");
+                .delete(ENDPOINT_USER);
+    }
+
+    @Step("Удаление пользователя с почтой {userReqJson.email} и паролем {userReqJson.password}")
+    public static void deleteUserAccount(UserReqJson userReqJson) {
+        UserApiClient userApiClient = new UserApiClient();
+        Response responseAuth = userApiClient.authorization(userReqJson);
+        if (responseAuth.statusCode() == 200) {
+            userApiClient.deleteUser();
+        } else {
+            System.out.println("Пользователь создан не был");
+        }
     }
 }

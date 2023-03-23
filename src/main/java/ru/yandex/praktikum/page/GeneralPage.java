@@ -123,19 +123,19 @@ public class GeneralPage {
 
     @Step("Открыта страница регистрации")
     public RegistrationPage openRegisterPage() {
-        open(Url.urlRegistration);
+        open(Url.URL_REGISTRATION);
         return page(RegistrationPage.class);
     }
 
     @Step("Открыта страница авторизации")
     public LoginPage openLoginPage() {
-        open(Url.urlLogin, LoginPage.class);
+        open(Url.URL_LOGIN, LoginPage.class);
         return page(LoginPage.class);
     }
 
     @Step("Открыта страница восстановления пароля")
     public RestorePasswordPage openRestorePasswordPage() {
-        open(Url.urlRestorePassword, RestorePasswordPage.class);
+        open(Url.URL_RESTORE_PASSWORD, RestorePasswordPage.class);
         return page(RestorePasswordPage.class);
     }
 
