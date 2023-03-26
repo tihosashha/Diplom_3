@@ -21,26 +21,19 @@ public class RegistrationTest {
 
     private UserReqJson userReqJson;
     private RegistrationPage registrationPage;
-    private String name;
-    private String email;
-    private String password;
 
     @Before
     public void setUp() {
         new DriverInitialization().startBrowser();
         userReqJson = GenerateData.generateUserAccount();
         registrationPage = open(Url.URL_REGISTRATION, RegistrationPage.class);
-        name = userReqJson.getName();
-        email = userReqJson.getEmail();
-        password = userReqJson.getPassword();
-
     }
 
     @Test
     @DisplayName("Успешная регистрация")
     public void successRegistrationTest() {
         registrationPage
-                .inputNameEmailPasswordAndRegister(name, email, password);
+                .inputNameEmailPasswordAndRegister(userReqJson.getName(), userReqJson.getEmail(), userReqJson.getPassword());
 
         assertTrue(registrationPage.returnTrueIfRegistrationSuccess());
     }
@@ -48,10 +41,11 @@ public class RegistrationTest {
     @Test
     @DisplayName("Проверка ошибки что пароль должен быть больше пяти знаков")
     public void returnErrorIfShortPasswordTest() {
+        userReqJson.setPassword("12345");
         registrationPage
-                .inputNameEmailPasswordAndRegister(name, email, "12345");
-
+                .inputNameEmailPasswordAndRegister(userReqJson.getName(), userReqJson.getEmail(), userReqJson.getPassword());
         assertTrue(registrationPage.returnTrueIfShowShortPasswordError());
+
     }
 
     @After
